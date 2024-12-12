@@ -1,0 +1,145 @@
+[
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "shutil",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "shutil",
+        "description": "shutil",
+        "detail": "shutil",
+        "documentation": {}
+    },
+    {
+        "label": "pip and run",
+        "importPath": "subprocess import PIPE. run  #",
+        "description": "subprocess import PIPE. run  #",
+        "isExtraImport": true,
+        "detail": "subprocess import PIPE. run  #",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "find_all_game_paths",
+        "kind": 2,
+        "importPath": "Python-Scripting-Project.get_game_data",
+        "description": "Python-Scripting-Project.get_game_data",
+        "peekOfCode": "def find_all_game_paths(source):  # will give teh full path with directory path\n    game_paths = []\n    for root, dirs, files in os.walk(source):  # walk recursively through source directories we passed to the os.walk command\n        for directory in dirs:  # gives the name of the directories not the paths\n            if GAME_DIR_PATTERN in directory.lower():  # name of the directory\n                path = os.path.join(source, directory)  # add this path to my game path \n                game_paths.append(path)  # adds the path of the directories\n        break\n    return game_paths\ndef get_name_from_paths(paths, to_strip):",
+        "detail": "Python-Scripting-Project.get_game_data",
+        "documentation": {}
+    },
+    {
+        "label": "get_name_from_paths",
+        "kind": 2,
+        "importPath": "Python-Scripting-Project.get_game_data",
+        "description": "Python-Scripting-Project.get_game_data",
+        "peekOfCode": "def get_name_from_paths(paths, to_strip):\n    new_names = []\n    for path in paths:\n        _, dir_name = os.path.split(path)  # split the path\n        new_dir_name = dir_name.replace(to_strip, \"\")\n        new_names.append(new_dir_name)\n    return new_names\ndef create_dir(path):\n    if not os.path.exists(path):\n        os.mkdir(path)",
+        "detail": "Python-Scripting-Project.get_game_data",
+        "documentation": {}
+    },
+    {
+        "label": "create_dir",
+        "kind": 2,
+        "importPath": "Python-Scripting-Project.get_game_data",
+        "description": "Python-Scripting-Project.get_game_data",
+        "peekOfCode": "def create_dir(path):\n    if not os.path.exists(path):\n        os.mkdir(path)\ndef copy_and_overwrite(source, dest):  # will take source and destination  and copy the sorce into the destination.\n    if os.path.exists(dest):\n        shutil.rmtree(dest)  # remove the destination folder\n    shutil.copytree(source, dest) \ndef make_json_metadata_file(path, game_dirs):\n    data = {\n        \"gameNames\": game_dirs,",
+        "detail": "Python-Scripting-Project.get_game_data",
+        "documentation": {}
+    },
+    {
+        "label": "copy_and_overwrite",
+        "kind": 2,
+        "importPath": "Python-Scripting-Project.get_game_data",
+        "description": "Python-Scripting-Project.get_game_data",
+        "peekOfCode": "def copy_and_overwrite(source, dest):  # will take source and destination  and copy the sorce into the destination.\n    if os.path.exists(dest):\n        shutil.rmtree(dest)  # remove the destination folder\n    shutil.copytree(source, dest) \ndef make_json_metadata_file(path, game_dirs):\n    data = {\n        \"gameNames\": game_dirs,\n        \"numberOfGames\": len(game_dirs)\n    }\n    with open(path, \"w\") as f:",
+        "detail": "Python-Scripting-Project.get_game_data",
+        "documentation": {}
+    },
+    {
+        "label": "make_json_metadata_file",
+        "kind": 2,
+        "importPath": "Python-Scripting-Project.get_game_data",
+        "description": "Python-Scripting-Project.get_game_data",
+        "peekOfCode": "def make_json_metadata_file(path, game_dirs):\n    data = {\n        \"gameNames\": game_dirs,\n        \"numberOfGames\": len(game_dirs)\n    }\n    with open(path, \"w\") as f:\n        json.dump(data, f)  # dump data into the file\ndef compile_game_code(path):\n    code_file_name = None\n    for root, dirs, files in os.walk(path):",
+        "detail": "Python-Scripting-Project.get_game_data",
+        "documentation": {}
+    },
+    {
+        "label": "compile_game_code",
+        "kind": 2,
+        "importPath": "Python-Scripting-Project.get_game_data",
+        "description": "Python-Scripting-Project.get_game_data",
+        "peekOfCode": "def compile_game_code(path):\n    code_file_name = None\n    for root, dirs, files in os.walk(path):\n        for file in files:  # in files\n            if file.endswith(GAME_CODE_EXTENSION):\n                code_file_name = file\n                break\n        break\n    if code_file_name is None:\n        return",
+        "detail": "Python-Scripting-Project.get_game_data",
+        "documentation": {}
+    },
+    {
+        "label": "run_command",
+        "kind": 2,
+        "importPath": "Python-Scripting-Project.get_game_data",
+        "description": "Python-Scripting-Project.get_game_data",
+        "peekOfCode": "def run_command(command, path):\n    cwd = os.getcwd()\n    os.chdir(path)\n    result = run(command, stdout=PIPE, stdin=PIPE, universal_newlines=True)  # PIPE makes the bridge between our python code and the process we are using to run the command\n    print(\"compile result\", result)\n    os.chdir(cwd)  # current working directory\ndef main(source, target):\n    cwd = os.getcwd()  # current working directory\n    source_path = os.path.join(cwd, source)  # os.path.join should be used when try to create a path not copying path manually.\n    target_path = os.path.join(cwd, target) ",
+        "detail": "Python-Scripting-Project.get_game_data",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "Python-Scripting-Project.get_game_data",
+        "description": "Python-Scripting-Project.get_game_data",
+        "peekOfCode": "def main(source, target):\n    cwd = os.getcwd()  # current working directory\n    source_path = os.path.join(cwd, source)  # os.path.join should be used when try to create a path not copying path manually.\n    target_path = os.path.join(cwd, target) \n    game_paths = find_all_game_paths(source_path)\n    new_game_dirs = get_name_from_paths(game_paths, \"_game\")\n    create_dir(target_path)\n    for src, dest in zip(game_paths, new_game_dirs):  # will take the matcging elements from 2 arrays and combine them into a tuple. \n        dest_path = os.path.join(target_path, dest)\n        copy_and_overwrite(src, dest_path)",
+        "detail": "Python-Scripting-Project.get_game_data",
+        "documentation": {}
+    },
+    {
+        "label": "GAME_DIR_PATTERN",
+        "kind": 5,
+        "importPath": "Python-Scripting-Project.get_game_data",
+        "description": "Python-Scripting-Project.get_game_data",
+        "peekOfCode": "GAME_DIR_PATTERN = \"game\"\nGAME_CODE_EXTENSION = \".go\"\nGAME_COMPILE_COMMAND = [\"go\", \"build\"]\ndef find_all_game_paths(source):  # will give teh full path with directory path\n    game_paths = []\n    for root, dirs, files in os.walk(source):  # walk recursively through source directories we passed to the os.walk command\n        for directory in dirs:  # gives the name of the directories not the paths\n            if GAME_DIR_PATTERN in directory.lower():  # name of the directory\n                path = os.path.join(source, directory)  # add this path to my game path \n                game_paths.append(path)  # adds the path of the directories",
+        "detail": "Python-Scripting-Project.get_game_data",
+        "documentation": {}
+    },
+    {
+        "label": "GAME_CODE_EXTENSION",
+        "kind": 5,
+        "importPath": "Python-Scripting-Project.get_game_data",
+        "description": "Python-Scripting-Project.get_game_data",
+        "peekOfCode": "GAME_CODE_EXTENSION = \".go\"\nGAME_COMPILE_COMMAND = [\"go\", \"build\"]\ndef find_all_game_paths(source):  # will give teh full path with directory path\n    game_paths = []\n    for root, dirs, files in os.walk(source):  # walk recursively through source directories we passed to the os.walk command\n        for directory in dirs:  # gives the name of the directories not the paths\n            if GAME_DIR_PATTERN in directory.lower():  # name of the directory\n                path = os.path.join(source, directory)  # add this path to my game path \n                game_paths.append(path)  # adds the path of the directories\n        break",
+        "detail": "Python-Scripting-Project.get_game_data",
+        "documentation": {}
+    },
+    {
+        "label": "GAME_COMPILE_COMMAND",
+        "kind": 5,
+        "importPath": "Python-Scripting-Project.get_game_data",
+        "description": "Python-Scripting-Project.get_game_data",
+        "peekOfCode": "GAME_COMPILE_COMMAND = [\"go\", \"build\"]\ndef find_all_game_paths(source):  # will give teh full path with directory path\n    game_paths = []\n    for root, dirs, files in os.walk(source):  # walk recursively through source directories we passed to the os.walk command\n        for directory in dirs:  # gives the name of the directories not the paths\n            if GAME_DIR_PATTERN in directory.lower():  # name of the directory\n                path = os.path.join(source, directory)  # add this path to my game path \n                game_paths.append(path)  # adds the path of the directories\n        break\n    return game_paths",
+        "detail": "Python-Scripting-Project.get_game_data",
+        "documentation": {}
+    }
+]
